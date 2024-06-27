@@ -1,0 +1,6 @@
+hola, mundo!!!
+
+no uso github desktop, use linea de comandos desde linux
+git add "nombre"
+git commit -m "texto"
+git push
