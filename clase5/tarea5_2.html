@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clase 5_2</title>
+    <style>
+        #respuestasUsuario{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="saludo">Bienvenido!</h1>
+    <form id="entrada-bar" onsubmit="return false;">
+        <input type="text" placeholder="Ingresá tu primer nombre" data-name="datoUsuario" id="nombreUsuario"/>
+        <input type="text" placeholder="Ingresá tu segundo nombre" data-name="datoUsuario" id="nombreUsuario"/>
+        <input type="text" placeholder="Ingresá tu apellido" data-name="datoUsuario" id="apellidoUsuario"/>
+        <input type="number" placeholder="Ingresá tu edad" data-name="datoUsuario" id="edadUsuario" />
+        <input type="submit" value="Ingresar" id="ingresar"/>
+    </form>
+
+    <input type="text" disabled id="respuestasUsuario"/>
+
+    <script src='tarea5_2.js'></script>
+</body>
+</html>
