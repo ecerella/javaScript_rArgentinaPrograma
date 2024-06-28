@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clase 5_3</title>
+    <style>
+        #formulario {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #contenido {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="numeroClasesForm">
+        <input type="number" id="numeroDeClases" placeholder="Número de clases" required>
+        <button type="submit">Ingresar el número de clases</button>
+    </form>
+    <br>
+    <form id="formulario" style="display: none;">
+        <input type="number" id="horasClase" placeholder="Horas de clase" required>
+        <input type="number" id="minutosClase" placeholder="Minutos de clase" required>
+        <input type="number" id="segundosClase" placeholder="Segundos de clase" required>
+        <button type="submit">Calcular</button>
+    </form>
+
+    <strong id="contenido">Contenido</strong>
+
+    <script src='tarea5_3.js'></script>
+</body>
+</html>
