@@ -11,17 +11,27 @@ let numeros = lista.getElementsByTagName('li');
 elementos = [];
 
 //Obtencion de numeros y almacenarlos en array
-for (let i=0; i<numeros.length; i++){
-    elementos.push(parseInt(numeros[i].textContent)); //convierto a valores enteros
+for (let i = 0; i < numeros.length; i++){
+    let numero = parseInt(numeros[i].textContent); //convierto a valores numericos con parseInt
+    if (!isNaN(numero)){
+        elementos.push(numero);
+    }
 }
 
-//como promedio, sumando todo y dividiendo por largo de cadena
-let suma = elementos.reduce((total, numero) => total + numero, 0);
-let promedio = suma / elementos.lenght;
+//verificar que elementos proporcione un array con valores
+console.log(elementos);
+
+let promedio = 0;
+
+//hay elementos para promedio?
+if (elementos.length > 0){ //error tipografico lengTTTTTh
+    let suma = elementos.reduce((total, numero) => total + numero, 0);
+    promedio = suma / elementos.length; //otra vez error tipografico lengTTTTTTTTTTTTh!
+}
 
 //mas chico La función Math.min() devuelve el menor de cero o más números.
-numeroMasChico = Math.min(...elementos);
-numeroMasGrande = Math.max(...elementos);
+let numeroMasChico = Math.min(...elementos);
+let numeroMasGrande = Math.max(...elementos);
 
 //numero que mas repite la lista.
 let frecuenciaNumeros = {};
