@@ -1,4 +1,4 @@
-/*
+/* 
 Cosas a tener en cuenta:
 1. Los <input> no tienen .innerText, en vez de eso, usan .value. https://developer.mozilla.org/es/docs/Web/HTML/Elemento/input
 
@@ -34,6 +34,25 @@ document.querySelector('#calcular').onclick = function(event){
   document.querySelector('#salario-mensual').value = salarioMensual.toFixed(2);//fixed, me soluciona la cantidad de decimales en la division
 }
 
+/* solucion fabricio *****************************************************************
+
+function calcularSalarioMensual(salarioAnual){
+  return salarioAnual / 12;
+}
+
+const $calcularSalarioMensual = document.querySelector('#calcular-salario-mensual');
+
+$calcularSalarioMensual.onclick = function(){
+  const salarioAnual = Number(document.querySelector('#salario-anual').value);
+  const salarioMensual = $calcularSalarioMensual(salarioAnual);
+
+  document.querySelector('#salario-mensual').value = salarioMensual;
+
+return false;
+}
+
+***************************************************************************************
+*/
 
 //TAREA: En otro archivo html (no Index) y otro archivo js (no tarea-clase-5.js),
 // creá un formulario que capture el primer nombre, segundo nombre, apellido/s y edad del usuario
