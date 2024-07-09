@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Edades Familiares</title>
+<style>
+    .oculto {
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <h2>Calculadora de Edades Familiares</h2>
+    <form id="formulario">
+        <label for="personasFamilia">Número de integrantes en la familia:</label>
+        <input type="number" id="personasFamilia">
+        <button id="entrada">Agregar Integrantes</button>
+        <button type="button" id="reset">Resetear</button>
+    </form>
+    <div id="personas"></div>
+    <div id="resultados" class="oculto">
+        <h3>Resultados</h3>
+        <p>Menor edad registrada: <span id="menorEdad"></span></p>
+        <p>Promedio de edades: <span id="promedioEdades"></span></p>
+    </div>
+
+    <script src="tarea6.js"></script>
+</body>
+</html>
