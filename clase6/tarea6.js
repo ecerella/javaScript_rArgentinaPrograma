@@ -25,16 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let edades = []; //almaceno edades
 
-    document.querySelector('#entrada').onclick = function (event) {
-        event.preventDefault();
+    document.querySelector('#entrada').addEventListener('click', function (event) {
+
         const personasFamilia = parseInt(document.querySelector('#personasFamilia').value);
 
         borrarEntradasAnteriores();
         crearIntegrantes(personasFamilia);
-    };
+    });
 
-    document.querySelector('#calcular').onclick = function (event) {
-        event.preventDeFault();
+    document.querySelector('#calcular').addEventListener('click', function (event) {
+
 
         //obtengo edades ingresadas
         const edadesEntradas = document.getElementsByName('edadIntegrante');
@@ -56,14 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //mostrar resultados
         ocultarResultados(false);
-    };
+    });
 
 
-    document.querySelector('#reset').onclick = resetear;
+    document.querySelector('#reset').addEventListener('click', resetear);
 
     function borrarEntradasAnteriores() {
         const integrantes = document.querySelectorAll('.integrante');
         integrantes.forEach(integrante => integrante.remove());
+        ocultarResultados(true);
     }
 
     function crearIntegrantes(personasFamilia) {
@@ -97,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function resetear() {
         borrarEntradasAnteriores();
-        ocultarResultados(true);
     }
 
     function mostrarBotonCalcular() {
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function ocultarResultados(ocultar) {
-        const resultados= document.querySelector('#resultados');
+        const resultados = document.querySelector('#resultados');
         resultados.classList.toggle('oculto', ocultar);
     }
 });
