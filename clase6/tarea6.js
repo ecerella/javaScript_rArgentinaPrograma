@@ -23,29 +23,54 @@ Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    let edades = []; //almaceno edades
+
     document.querySelector('#entrada').onclick = function (event) {
         event.preventDefault();
-        const $personasFamilia = document.querySelector('#personasFamilia');
-        const personasFamilia = Number($personasFamilia.value);
+        const personasFamilia = parseInt(document.querySelector('#personasFamilia').value);
 
         borrarEntradasAnteriores();
         crearIntegrantes(personasFamilia);
     };
 
+    document.querySelector('#calcular').onclick = function (event) {
+        event.preventDeFault();
+
+        //obtengo edades ingresadas
+        const edadesEntradas = document.getElementsByName('edadIntegrante');
+        edades = [];
+        for (let i = 0; i < edadesEntradas.length; i++){
+            edades.push(parseInt(edadesEntradas[i].value));//parseint convierte edades a numeros
+        }
+
+        //calculos
+        const mayor = Math.max(...edades);
+        document.querySelector('#mayorEdad').textContent = mayor;
+
+        const menor = Math.min(...edades);
+        document.querySelector('#menorEdad').textContent = menor;
+
+        const sumaEdades = edades.reduce((total, edad) => total + edad, 0);
+        const promedio = sumaEdades / edades.length;
+        document.querySelector('#promedioEdades').textContent = promedio.toFixed(2);
+
+        //mostrar resultados
+        ocultarResultados(false);
+    };
+
+
     document.querySelector('#reset').onclick = resetear;
 
     function borrarEntradasAnteriores() {
-        const $personas = document.querySelectorAll('.integrante');
-        for (let i = 0; i < $personas.length; i++) {
-            $personas[i].remove();
-        }
+        const integrantes = document.querySelectorAll('.integrante');
+        integrantes.forEach(integrante => integrante.remove());
     }
 
     function crearIntegrantes(personasFamilia) {
         if (personasFamilia > 0) {
-            mostrarBotonEnter();
+            mostrarBotonCalcular();
             for (let i = 0; i < personasFamilia; i++) {
-                crearIntegrante(i);
+                crearIntegrante(i + 1);
             }
         } else {
             resetear();
@@ -53,32 +78,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function crearIntegrante(indice) {
-        const $div = document.createElement('div');
-        $div.className = 'integrante';
+        const div = document.createElement('div');
+        div.className = 'integrante';
 
-        const $label = document.createElement('label');
-        $label.textContent = 'Edad del integrante #' + (indice + 1) + ':';
-        const $input = document.createElement('input');
-        $input.type = 'number';
-        $input.name = 'edadIntegrante'; // Agregar un nombre para identificar luego
+        const label = document.createElement('label');
+        label.textContent = 'Edad del integrante #' + indice + ':';
 
-        $div.appendChild($label);
-        $div.appendChild($input);
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.name = 'edadIntegrante';
 
-        const $integrantes = document.querySelector('#personas');
-        $integrantes.appendChild($div);
+        div.appendChild(label);
+        div.appendChild(input);
+
+        const integrantes = document.querySelector('#personas');
+        integrantes.appendChild(div);
     }
 
     function resetear() {
         borrarEntradasAnteriores();
-        ocultarResultados();
+        ocultarResultados(true);
     }
 
-    function mostrarBotonEnter() {
-        document.querySelector('#resultados').classList.add('oculto');
+    function mostrarBotonCalcular() {
+        document.querySelector('#calcular').classList.remove('oculto');
     }
 
-    function ocultarResultados() {
-        document.querySelector('#resultados').classList.remove('oculto');
+    function ocultarResultados(ocultar) {
+        const resultados= document.querySelector('#resultados');
+        resultados.classList.toggle('oculto', ocultar);
     }
 });
