@@ -24,6 +24,7 @@ Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como
 document.addEventListener('DOMContentLoaded', function () {
 
     let edades = []; //almaceno edades
+    let salarios = []; //almaceno salarios
 
     document.querySelector('#entrada').addEventListener('click', function (event) {
 
@@ -38,21 +39,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //obtengo edades ingresadas
         const edadesEntradas = document.getElementsByName('edadIntegrante');
+        const salariosEntradas = document.getElementsByName('salarioIntegrante');
+
         edades = [];
+        salarios = [];
+
+        //recorro edades y salarios y guardo si hay edad asociada y salario valido
         for (let i = 0; i < edadesEntradas.length; i++){
-            edades.push(parseInt(edadesEntradas[i].value));//parseint convierte edades a numeros
+            const edad = parseInt(edadesEntradas[i].value);
+            const salario = parseFloat(salariosEntradas[i].value);
+
+            if (!isNaN(edad) && !isNaN(salario)){
+                edades.push(edad);
+                salarios.push(salario);
+            }
         }
 
-        //calculos
-        const mayor = Math.max(...edades);
-        document.querySelector('#mayorEdad').textContent = mayor;
+        //calculos edades
+        const mayorEdad = Math.max(...edades);
+        document.querySelector('#mayorEdad').textContent = mayorEdad;
 
-        const menor = Math.min(...edades);
-        document.querySelector('#menorEdad').textContent = menor;
+        const menorEdad = Math.min(...edades);
+        document.querySelector('#menorEdad').textContent = menorEdad;
 
         const sumaEdades = edades.reduce((total, edad) => total + edad, 0);
-        const promedio = sumaEdades / edades.length;
-        document.querySelector('#promedioEdades').textContent = promedio.toFixed(2);
+        const promedioEdades = sumaEdades / edades.length;
+        document.querySelector('#promedioEdades').textContent = promedioEdades.toFixed(2);
+
+
+        //calculos salarios
+        const mayorSalario = math.max(...salarios);
+        document.querySelector('#mayorSalario').textContent = mayorSalario.toFixed(2);
+
+        const menorSalario = math.min(...salarios);
+        document.querySelector('menorSalario').textContent = menorSalario.toFixed(2);
+
+        const sumaSalarios = salarios.reduce((total, salario) => total + salario, 0);
+        const promedioSalarios = sumaSalarios / salarios.length;
+        document.querySelector('#promedioSalarios').textContent = promedioSalarios.toFixed(2);
+
+        //promedio salario mensual?
+        const salarioMensualPromedio = promedioSalarios / 12; 
+        document.querySelector('#salarioMensualPromedio').textContent = salarioMensualPromedio.toFixed(2);
 
         //mostrar resultados
         ocultarResultados(false);
@@ -82,15 +110,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const div = document.createElement('div');
         div.className = 'integrante';
 
-        const label = document.createElement('label');
-        label.textContent = 'Edad del integrante #' + indice + ':';
+        const labelEdad = document.createElement('label');
+        labelEdad.textContent = 'Edad del integrante #' + indice + ':';
 
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.name = 'edadIntegrante';
+        const inputEdad = document.createElement('input');
+        inputEdad.type = 'number';
+        inputEdad.name = 'edadIntegrante';
 
-        div.appendChild(label);
-        div.appendChild(input);
+        const labelSalario = document.createElement('label');
+        labelSalario.textContent = 'Salario anual del integrante #' + indice + ':';
+
+        const inputSalario = document.createElement('input');
+        inputSalario.type = 'number';
+        inputSalario.name = 'salarioIntegrante';
+
+        div.appendChild(labelEdad);
+        div.appendChild(inputEdad);
+        div.appendChild(labelSalario);
+        div.appendChild(inputSalario);
 
         const integrantes = document.querySelector('#personas');
         integrantes.appendChild(div);
