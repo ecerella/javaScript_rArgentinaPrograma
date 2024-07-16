@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         borrarEntradasAnteriores();
         crearIntegrantes(personasFamilia);
+        mostrarBotonCalcular();
     });
 
     document.querySelector('#calcular').addEventListener('click', function (event) {
 
-
-        //obtengo edades ingresadas
+        //obtengo edades y salarios ingresadas
         const edadesEntradas = document.getElementsByName('edadIntegrante');
         const salariosEntradas = document.getElementsByName('salarioIntegrante');
 
@@ -68,15 +68,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         //calculos salarios
-        const mayorSalario = math.max(...salarios);
+        const mayorSalario = Math.max(...salarios);
         document.querySelector('#mayorSalario').textContent = mayorSalario.toFixed(2);
 
-        const menorSalario = math.min(...salarios);
-        document.querySelector('menorSalario').textContent = menorSalario.toFixed(2);
+        const menorSalario = Math.min(...salarios);
+        document.querySelector('#menorSalario').textContent = menorSalario.toFixed(2);
 
         const sumaSalarios = salarios.reduce((total, salario) => total + salario, 0);
         const promedioSalarios = sumaSalarios / salarios.length;
-        document.querySelector('#promedioSalarios').textContent = promedioSalarios.toFixed(2);
+        document.querySelector('#promedioSalario').textContent = promedioSalarios.toFixed(2);
 
         //promedio salario mensual?
         const salarioMensualPromedio = promedioSalarios / 12; 
