@@ -8,10 +8,6 @@ const ciudad = $form.ciudad.value;
 const comportamiento = $form.comportamiento.value;
 const descripcionRegalo = $form['descripcion-regalo'].value;
 
-console.log(nombre);
-console.log(ciudad);
-console.log(comportamiento);
-console.log(descripcionRegalo);
 
 function validarNombre(nombre) {
     if(nombre.length === 0){
@@ -20,6 +16,11 @@ function validarNombre(nombre) {
     if(nombre.length >= 50){
         return "Este campo debe tener menos de 50 caracteres";
     }
+
+    if(/^[a-z]+$/i.test(nombre)) {
+        return "El campo nombre solo acepta letras"
+    }
+
     return "";
 }
 
@@ -37,10 +38,33 @@ function validarDescripcionRegalo(descripcionRegalo) {
     if(descripcionRegalo.lenght === "") {
         return "No asigno un regalo a recibir";
     }
+    if(/^[a-z0-9]+$/i.test(descripcionRegalo)){
+        return"El campo descripccion solo puede tener numeros y letras";
+    }
     return "";
 }
 
-//validarCiudad
-//validarDescripcionRegalo
+function validarFormulario(event) {
+    const $form = document.querySelector("#carta-a-santa");
+    const errorNombre = validarNombre($form.nombre.value);
+    const ciudad = $form.ciudad.value;
+    const comportamiento = $form.comportamiento.value;
+    const descripcionRegalo = $form["descripcion-regalo"].value;
 
-//escribir pruebas funciones tareas 5 y 6
+    manejarErrores([errorNombre]);
+
+    event.preventDefault();
+}
+
+function manejarErrores(errores) {
+    errorNombre = errores[0]; //nombre
+
+    if (errorNombre) {
+        $form.nombre.className = "error";
+    }else{
+        $form.nombre.className = "";
+    }
+}
+
+const $form = document.querySelector("#carta-a-santa");
+$form.onsubmit = validarFormulario;

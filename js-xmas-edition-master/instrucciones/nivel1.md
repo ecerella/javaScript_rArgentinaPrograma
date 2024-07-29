@@ -79,6 +79,7 @@ Para validar nuestro formulario, vamos a tener  que hacer lo siguiente:
   el error: 'Este campo debe tener menos de 50 caracteres'
 
 
+
   Ahora vamos a hacer una validación más interesante.
   Queremos que nuestro nombre contenga sólo letras.
   Pero cómo podemos validar esto? Con una herramienta que se llama
