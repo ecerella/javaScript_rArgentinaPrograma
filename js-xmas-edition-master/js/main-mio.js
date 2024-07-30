@@ -1,5 +1,5 @@
-const $form = document.querySelector("#carta-a-santa");
 
+const $form = document.querySelector("#carta-a-santa");
 const nombre = document.querySelector('#nombre').value;
 
 /* formas de hacer lo mismo:
@@ -60,36 +60,63 @@ function validarFormulario(event) {
     const errores = {
         nombre: errorNombre,
         ciudad: errorCiudad,
-        descripcionRegalo: errorDescripcionRegalo
+        'descripcion-regalo': errorDescripcionRegalo
     };
 
-    manejarErrores(errores);
+    const esExito = manejarErrores(errores) === 0;
+
+    if(esExito) {
+        $form.className = 'oculto';
+        document.querySelector('#exito').className = '';
+    }
 
     event.preventDefault();
 }
 
 function manejarErrores(errores) {
-    errorNombre = errores.nombre; //nombre
-    errorCiudad = errores.ciudad;
-    errorDescripcionRegalo = errores.descripcionRegalo;
+    const keys = object.keys(errores);
+    const $errores = document.querySelectorAll('#errores');
+    let cantidadErrores = 0;
 
-    if (errorNombre) {
-        $form.nombre.className = "error";
-    }else{
-        $form.nombre.className = "";
-    }
+    keys.forEach(function(key){
+        const error = errores[key];
 
-    if (errorCiudad) {
-        $form.ciudad.className = "error";
-    }else{
-        $form.ciudad.className = "";
-    }
+        if(error){
+            cantidadErrores++;
+            $form[key].className = "error"
 
-    if (errores.descripcionRegalo) {
-        $form['descripcion-regalo'].className = "error";
-    }else{
-        $form['descripcion-regalo'].className = "";
-    }
+            const $error = document.createElement('li');
+            $error.innerText = error;
+
+            $errores.appendChild($error);
+        }else{
+            //borran el campo adecuado
+            $form(key).className = ""
+        }
+    });
+//    errorNombre = errores.nombre; //nombre
+//    errorCiudad = errores.ciudad;
+//    errorDescripcionRegalo = errores.descripcionRegalo;
+//
+//    if (errorNombre !== "") {
+//        $form.nombre.className = "error";
+//   }else{
+//        $form.nombre.className = "";
+//    }
+//
+//    if (errorCiudad) {
+//        $form.ciudad.className = "error";
+//    }else{
+//        $form.ciudad.className = "";
+//    }
+//
+//    if (errores.descripcionRegalo) {
+//        $form['descripcion-regalo'].className = "error";
+//    }else{
+//        $form['descripcion-regalo'].className = "";
+//    }
+
+return cantidadErrores;
 }
 
 $form.onsubmit = validarFormulario;
