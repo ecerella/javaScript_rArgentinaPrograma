@@ -1,9 +1,11 @@
-const $form = document.querySelector('#carta-a-santa');
+const $form = document.querySelector("#carta-a-santa");
 
-const nombre = $form.nombre;
+const nombre = document.querySelector('#nombre').value;
+
 /* formas de hacer lo mismo:
 nombre = document.querySelector('[name=nombre]').value;
-nombre = document.querySelector('#nombre').value; */
+const nombre = $form.nombre;
+*/
 const ciudad = $form.ciudad.value;
 const comportamiento = $form.comportamiento.value;
 const descripcionRegalo = $form['descripcion-regalo'].value;
@@ -46,25 +48,48 @@ function validarDescripcionRegalo(descripcionRegalo) {
 
 function validarFormulario(event) {
     const $form = document.querySelector("#carta-a-santa");
-    const errorNombre = validarNombre($form.nombre.value);
+
+    const nombre = $form.nombre.value;
     const ciudad = $form.ciudad.value;
-    const comportamiento = $form.comportamiento.value;
     const descripcionRegalo = $form["descripcion-regalo"].value;
 
-    manejarErrores([errorNombre]);
+    const errorNombre = validarNombre(nombre);
+    const errorCiudad = validarCiudad(ciudad);
+    const errorDescripcionRegalo = validarDescripcionRegalo(descripcionRegalo);
+
+    const errores = {
+        nombre: errorNombre,
+        ciudad: errorCiudad,
+        descripcionRegalo: errorDescripcionRegalo
+    };
+
+    manejarErrores(errores);
 
     event.preventDefault();
 }
 
 function manejarErrores(errores) {
-    errorNombre = errores[0]; //nombre
+    errorNombre = errores.nombre; //nombre
+    errorCiudad = errores.ciudad;
+    errorDescripcionRegalo = errores.descripcionRegalo;
 
     if (errorNombre) {
         $form.nombre.className = "error";
     }else{
         $form.nombre.className = "";
     }
+
+    if (errorCiudad) {
+        $form.ciudad.className = "error";
+    }else{
+        $form.ciudad.className = "";
+    }
+
+    if (errores.descripcionRegalo) {
+        $form['descripcion-regalo'].className = "error";
+    }else{
+        $form['descripcion-regalo'].className = "";
+    }
 }
 
-const $form = document.querySelector("#carta-a-santa");
 $form.onsubmit = validarFormulario;
