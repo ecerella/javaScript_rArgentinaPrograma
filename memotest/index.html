@@ -55,7 +55,7 @@
     let seleccionados = [];
     let intentos = 0;
     let paresEncontrados = 0;
-    const colores = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'pink', 'cyan', 'brown']; // Añadimos colores adicionales para 9 pares
+    const colores = ['red', 'blue', 'yellow', 'orange', 'pink', 'cyan']; // Añadimos colores adicionales para 6 pares
 
     function iniciarJuego() {
         document.getElementById('estado').textContent = 'Juega a buscar pares!';
@@ -69,7 +69,7 @@
     function crearCuadros() {
         const tablero = document.getElementById('tablero');
         tablero.innerHTML = '';
-        cuadros = [];
+        //cuadros = [];  (correxion de alexis, ya esta declarado)
 
         // Barajar colores para 9 pares (18 cuadros)
         const coloresDuplicados = colores.concat(colores);
@@ -102,16 +102,16 @@
 
             if (seleccionados[0].dataset.color === seleccionados[1].dataset.color) {
                 paresEncontrados++;
-                seleccionados.forEach(c => c.classList.add('revelado'));
+                seleccionados.forEach(callback => callback.classList.add('revelado'));
                 seleccionados = [];
                 if (paresEncontrados === colores.length) {
                     actualizarEstado('¡Ganaste! Todos los pares encontrados.');
                 }
             } else {
                 setTimeout(() => {
-                    seleccionados.forEach(c => {
-                        c.classList.add('oculto');
-                        c.style.backgroundColor = 'white'; // Volver a blanco si no es par
+                    seleccionados.forEach(callback => {
+                        callback.classList.add('oculto');
+                        callback.style.backgroundColor = 'white'; // Volver a blanco si no es par
                     });
                     seleccionados = [];
                 }, 1000);
