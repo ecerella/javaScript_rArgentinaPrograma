@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Juego de Pares</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+        background-color: green; /* Cambia el color de fondo de la página a verde */
+        }
+        .cuadro {
+            height: 200px;
+            width: 200px;
+            background-color: white; /* Cambiado a blanco inicialmente */
+            opacity: 1;
+            transition: opacity 500ms, background-color 500ms;
+            cursor: pointer;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .cuadro.oculto {
+            background-color: white; /* Blanco para los cuadros ocultos */
+        }
+
+        .cuadro.revelado {
+            opacity: 1; /* Sin opacidad cuando está revelado */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="alert alert-primary" role="alert" id="estado"><!-- --></div>
+        </div>
+        <div class="col-sm-2">
+            <p>Intentos: <strong id="intentos">0</strong></p>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" onclick="iniciarJuego()">Empezar</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="tablero">
+    <!-- Cuadros generados por JavaScript -->
+</div>
+
+<script type="text/javascript">
+    let cuadros = [];
+    let seleccionados = [];
+    let intentos = 0;
+    let paresEncontrados = 0;
+    const colores = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'pink', 'cyan', 'brown']; // Añadimos colores adicionales para 9 pares
+
+    function iniciarJuego() {
+        document.getElementById('estado').textContent = 'Juega a buscar pares!';
+        document.getElementById('intentos').textContent = '0';
+        paresEncontrados = 0;
+        intentos = 0;
+        actualizarEstado('¡Comienza a jugar!');
+        crearCuadros();
+    }
+
+    function crearCuadros() {
+        const tablero = document.getElementById('tablero');
+        tablero.innerHTML = '';
+        cuadros = [];
+
+        // Barajar colores para 9 pares (18 cuadros)
+        const coloresDuplicados = colores.concat(colores);
+
+        // Barajar los colores
+        coloresDuplicados.sort(() => Math.random() - 0.5);
+
+        // Crear cuadros con colores ocultos
+        coloresDuplicados.forEach((color, index) => {
+            const div = document.createElement('div');
+            div.className = 'cuadro oculto';
+            div.dataset.color = color;
+            div.id = 'cuadro-' + (index + 1);
+            div.onclick = () => manejarSeleccion(div);
+            tablero.appendChild(div);
+            cuadros.push(div);
+        });
+    }
+
+    function manejarSeleccion(cuadro) {
+        if (seleccionados.length === 2 || cuadro.classList.contains('revelado')) return;
+
+        cuadro.classList.remove('oculto');
+        cuadro.style.backgroundColor = cuadro.dataset.color;
+        seleccionados.push(cuadro);
+
+        if (seleccionados.length === 2) {
+            intentos++;
+            document.getElementById('intentos').textContent = intentos;
+
+            if (seleccionados[0].dataset.color === seleccionados[1].dataset.color) {
+                paresEncontrados++;
+                seleccionados.forEach(c => c.classList.add('revelado'));
+                seleccionados = [];
+                if (paresEncontrados === colores.length) {
+                    actualizarEstado('¡Ganaste! Todos los pares encontrados.');
+                }
+            } else {
+                setTimeout(() => {
+                    seleccionados.forEach(c => {
+                        c.classList.add('oculto');
+                        c.style.backgroundColor = 'white'; // Volver a blanco si no es par
+                    });
+                    seleccionados = [];
+                }, 1000);
+            }
+        }
+    }
+
+    function actualizarEstado(mensaje) {
+        document.getElementById('estado').textContent = mensaje;
+    }
+
+</script>
+</body>
+</html>
+
