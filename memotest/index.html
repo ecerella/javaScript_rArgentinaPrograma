@@ -35,7 +35,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            <div class="alert alert-primary" role="alert" id="estado"><!-- --></div>
+            <div class="alert alert-primary" role="alert" id="estado">juego de pares</div>
         </div>
         <div class="col-sm-2">
             <p>Intentos: <strong id="intentos">0</strong></p>
@@ -55,6 +55,7 @@
     let seleccionados = [];
     let intentos = 0;
     let paresEncontrados = 0;
+    let bloqueado = false; // Bandera para bloquear la selección de cuadros
     const colores = ['red', 'blue', 'yellow', 'orange', 'pink', 'cyan']; // Añadimos colores adicionales para 6 pares
 
     function iniciarJuego() {
@@ -62,6 +63,7 @@
         document.getElementById('intentos').textContent = '0';
         paresEncontrados = 0;
         intentos = 0;
+        bloqueado = false; // Desbloquear la selección de cuadros al iniciar el juego
         actualizarEstado('¡Comienza a jugar!');
         crearCuadros();
     }
@@ -69,9 +71,9 @@
     function crearCuadros() {
         const tablero = document.getElementById('tablero');
         tablero.innerHTML = '';
-        //cuadros = [];  (correxion de alexis, ya esta declarado)
+        cuadros = [];  //(correxion de alexis, ya esta declarado)
 
-        // Barajar colores para 9 pares (18 cuadros)
+        // Barajar colores para 6 pares (12 cuadros)
         const coloresDuplicados = colores.concat(colores);
 
         // Barajar los colores
@@ -90,7 +92,8 @@
     }
 
     function manejarSeleccion(cuadro) {
-        if (seleccionados.length === 2 || cuadro.classList.contains('revelado')) return;
+        if (bloqueado || seleccionados.length === 2 || cuadro.classList.contains('revelado')) return;
+        if (seleccionados.includes(cuadro)) return;
 
         cuadro.classList.remove('oculto');
         cuadro.style.backgroundColor = cuadro.dataset.color;
@@ -99,11 +102,14 @@
         if (seleccionados.length === 2) {
             intentos++;
             document.getElementById('intentos').textContent = intentos;
+            bloqueado = true; // Bloquear la selección de cuadros mientras se verifica el par
+
 
             if (seleccionados[0].dataset.color === seleccionados[1].dataset.color) {
                 paresEncontrados++;
                 seleccionados.forEach(callback => callback.classList.add('revelado'));
                 seleccionados = [];
+                bloqueado = false; // Desbloquear la selección de cuadros después de verificar el par
                 if (paresEncontrados === colores.length) {
                     actualizarEstado('¡Ganaste! Todos los pares encontrados.');
                 }
@@ -114,6 +120,7 @@
                         callback.style.backgroundColor = 'white'; // Volver a blanco si no es par
                     });
                     seleccionados = [];
+                    bloqueado = false; // Desbloquear la selección de cuadros después del tiempo de espera
                 }, 1000);
             }
         }
