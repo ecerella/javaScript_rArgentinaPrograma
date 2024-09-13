@@ -71,7 +71,7 @@
     function crearCuadros() {
         const tablero = document.getElementById('tablero');
         tablero.innerHTML = '';
-        cuadros = [];  //(correxion de alexis, ya esta declarado)
+        //cuadros = [];  (correxion de alexis, ya esta declarado)
 
         // Barajar colores para 6 pares (12 cuadros)
         const coloresDuplicados = colores.concat(colores);
@@ -92,8 +92,16 @@
     }
 
     function manejarSeleccion(cuadro) {
+
+        /*
         if (bloqueado || seleccionados.length === 2 || cuadro.classList.contains('revelado')) return;
         if (seleccionados.includes(cuadro)) return;
+        */ 
+        // correccion alexis redundancia pero si saco el 2do if se rompe la logica al hacer multiples click en cuadro!
+
+        if (bloqueado || seleccionados.length === 2 || cuadro.classList.contains('revelado') || seleccionados.includes(cuadro)) {
+        return;
+        }
 
         cuadro.classList.remove('oculto');
         cuadro.style.backgroundColor = cuadro.dataset.color;
