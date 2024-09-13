@@ -6,16 +6,16 @@ describe('Juego de Pares', () => {
     cy.visit('index.html'); // Asegúrate de que la ruta sea correcta
   });
 
+  it('debería permitir iniciar el juego', () => {
+    cy.contains('Empezar').click();
+    cy.get('#estado').should('contain.text', '¡Comienza a jugar!');
+  });
+
   it('debería cargar el juego correctamente', () => {
     // Verifica que el estado inicial sea correcto
     cy.get('#estado').should('contain.text', 'Juego de Pares');
     cy.get('#intentos').should('have.text', '0');
-    cy.get('.cuadro').should('have.length', 12);
-  });
-
-  it('debería permitir iniciar el juego', () => {
-    cy.contains('Empezar').click();
-    cy.get('#estado').should('contain.text', 'Juega a buscar pares!');
+    cy.get('#cuadro').should('have.length', 12);
   });
 
   it('debería permitir seleccionar cuadros y encontrar pares', () => {
