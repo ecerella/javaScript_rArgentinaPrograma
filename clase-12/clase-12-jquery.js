@@ -30,4 +30,81 @@ $elementos.on("click", function(){
 /*const $buttons = $(".button"); // si esto trae 10 botones
 
 $buttons.trigger('click'); // esto dispara el evento trigger en 10 botones
+
+arrow functions: explicacion
+funcion comun:
+
+    function(){
+    }
+
+arrow function: (leiminamos la palabra function y entre parametros y cuerpo agrego =>)
+()=>{
+    }
+
+diferencias:
+
+//arrow functon no tienen this propio
+$elementos.click(()=>{
+    console.log(this);     //window
+});
+en una arrow function no hay this implicado, siempre responde al padre. windows
+una funcion comun this responde en nuestro caso a cada li
+//arrow functon no tienen this propio
+
+$elementos.click(function(){
+    console.log(this);     //li
+});
+
 */
+//fetch API: https://developer.mozilla.org/en-US/docs/web/API/Fetch_API
+//usa promesas
+/*Fetch("https://api.exchangeratesapi.io/latest") //FETCH devuelve una promesa, un objeto con metodo then
+    .then(respuesta => respuesta.json())
+    //igual a: .then(function(respuesta){ return respuesta.json();})
+    .then(respuesta => {
+        $("#resultado").text($("#resultado").text() + JSON.stringify(respuesta));
+    })
+    .catch(error => console.error("fallo", error));
+
+*/
+//web API
+$.ajax({ //asynchronous javascript and XML
+    method: "GET",
+    url:"https://api.exchangeratesapi.io/latest",
+    success: respuesta => {
+        console.log("respuesta de exchangeratesapi.io", respuesta);
+        $("#resultado").text(JSON.stringify(respuesta));
+    }
+    //async: false //al ddescomentar esta linea, nada se ejecuta hasta que esta llamada termine.
+});
+
+console.log("esto pasa antes que la respuesta de $.ajax");
+
+
+
+
+//CHAINING (concatenacion)
+$elementos
+    .addClass("rojo")
+    .addClass("grande")
+    .css({fontWeight:"bold"});
+
+//funciona por que el metodo addClass, y casi todos los metodos jQery, devuelven el objeto original
+//ejemplo de implementacion chaining:
+
+const miObjeto = {
+    decirHola(){
+        console.log("hola");
+        return this;
+    },
+    decirChau() {
+        console.log("chau");
+        return this;
+    }
+};
+
+miObjeto
+    .decirHola()
+    .decirChau()
+    .decirHola();
+//cada funcion devuelve el mismo objeto, para encadenar
