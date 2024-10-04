@@ -119,7 +119,7 @@ function verificarMayorDeEdad(edadUsuario){
     return new Promise(function(resolve, reject){
         console.log("Verificando en un proceso externo larguisimo...");
 
-        setTimeout(function(){
+        setTimeout(function(){ //solo simulo un proceso largo
             if (edadUsuario >= 18){
                 resolve("la edad era posta");
             }else{
