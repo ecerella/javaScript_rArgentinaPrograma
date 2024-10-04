@@ -66,6 +66,9 @@ $elementos.click(function(){
     })
     .catch(error => console.error("fallo", error));
 
+console.log("esto pasa antes que la respuesta de fetch");
+
+
 */
 //web API
 $.ajax({ //asynchronous javascript and XML
@@ -75,7 +78,7 @@ $.ajax({ //asynchronous javascript and XML
         console.log("respuesta de exchangeratesapi.io", respuesta);
         $("#resultado").text(JSON.stringify(respuesta));
     }
-    //async: false //al ddescomentar esta linea, nada se ejecuta hasta que esta llamada termine.
+    //async: false //al descomentar esta linea, nada se ejecuta hasta que esta llamada termine.
 });
 
 console.log("esto pasa antes que la respuesta de $.ajax");
@@ -108,3 +111,25 @@ miObjeto
     .decirChau()
     .decirHola();
 //cada funcion devuelve el mismo objeto, para encadenar
+
+
+
+//ejemplo implementacion de promesas
+function verificarMayorDeEdad(edadUsuario){
+    return new Promise(function(resolve, reject){
+        console.log("Verificando en un proceso externo larguisimo...");
+
+        setTimeout(function(){
+            if (edadUsuario >= 18){
+                resolve("la edad era posta");
+            }else{
+                reject("la edad no era posta");
+            }
+        }, 5000);
+    });
+};
+
+const edad = 17;
+verificarMayorDeEdad(edad) //(si ejecuto solo la funcion me devuelve una promesa sin resolve ni reject)
+    .then(mensaje => console.log(mensaje)) //cuando el them pasa una funcion se ejecuta el resolve
+    .catch(error => console.error(error)); //cuando paso el catch se ejecuta el reject
